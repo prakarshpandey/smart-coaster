@@ -1,18 +1,27 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// define constants and variables
-#define SENSOR_PORT 2
+// define pins
+// temp pin
+#define SENSOR_PORT 2 
+// color pins
 #define RED_PORT 11
 #define GREEN_PORT 12
 #define BLUE_PORT 12
 
-double TEMP_LOWER_BOUND = 5.0; // degrees celcius
-double TEMP_UPPER_BOUND = 75.0; // degrees celcius
-double HSV_UPPER_BOUND = 240.0; // degrees
-double HSV_SATURATION = 1.0;
+// declare 'constant' variables
+// temp thresholds for color change (range in between upper and lower is green)
+double TEMP_LOWER_BOUND = 25.0; // degrees celcius was 5.0
+double TEMP_UPPER_BOUND = 30.0; // degrees celcius was 75.0
+// color settings 
+
+// i feel like it should be hue with the way we're defining it here...
+double HSV_UPPER_BOUND = 240.0; // degrees - color for 'cold' temps 
+double HSV_LOWER_BOUND = 0.0; // degrees - color for 'hot' temps
+double HSV_SATURATION = 1.0; 
 double HSV_VALUE = 1.0;
 
+// declare variables
 double tempInput, hsvHue, red, blue, green = 0;
 
 OneWire oneWire(SENSOR_PORT);
@@ -37,9 +46,11 @@ void printDouble( double val, unsigned int precision){
 
 void setup(void)
 {
+  // set up for the temp sensor
   Serial.begin(9600);
   sensors.begin();
-  
+
+  // set the modes for each of the pins
   pinMode(RED_PORT, OUTPUT); 
   pinMode(GREEN_PORT, OUTPUT);
   pinMode(BLUE_PORT, OUTPUT);
@@ -47,35 +58,45 @@ void setup(void)
 
 void loop(void)
 {
-  //digitalWrite(LED_PORT, LOW);
-  //delay(1000);
-  //digitalWrite(LED_PORT, HIGH);
-
+  // get temp data
   sensors.requestTemperatures();
   Serial.println(sensors.getTempCByIndex(0));
   tempInput = sensors.getTempCByIndex(0);
+
+  // convert temp to HSV
   hsvHue = temperatureToHue(tempInput);
-  printDouble(hsvHue, 100);
-  Serial.print("\n");
+
+//  Serial.print("hue : ");
+//  printDouble(hsvHue, 100);
+//  Serial.print(" (degrees)\n");
+
+  // convert HSV to RGB values
   HSVtoRGB(red, blue, green, hsvHue, HSV_SATURATION, HSV_VALUE);
-  printDouble(red, 100);
-  printDouble(green, 100);
-  printDouble(blue, 100);
-  
+
+  Serial.print("red: ");
+  Serial.print(red);
+  Serial.print(" green: ");
+  Serial.print(green);
+  Serial.print(" blue: ");
+  Serial.print(blue);
+  Serial.print("\n");
+ 
   delay(1000);
 
+  // set the output for the LEDs
   setColor((int)red, (int)green, (int)blue);
-  red, green, blue = 0.0;
+
+  //red, green, blue = 0.0;
 }
 
 double temperatureToHue(double temp)
 {
   if (temp <= TEMP_LOWER_BOUND)
   {
-    return (double) HSV_UPPER_BOUND;
+    return HSV_UPPER_BOUND;
   }
   else if (temp >= TEMP_UPPER_BOUND) {
-    return 0.0;
+    return HSV_LOWER_BOUND;
   }
   else {
     double tempDiff = TEMP_UPPER_BOUND - TEMP_LOWER_BOUND;
