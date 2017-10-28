@@ -33,6 +33,7 @@ void printDouble( double val, unsigned int precision){
 // prints val with number of decimal places determine by precision
 // NOTE: precision is 1 followed by the number of zeros for the desired number of decimial places
 // example: printDouble( 3.1415, 100); // prints 3.14 (two decimal places)
+// used for testing and debugging
 
    Serial.print (int(val));  //prints the int part
    Serial.print("."); // print the decimal point
@@ -47,7 +48,7 @@ void printDouble( double val, unsigned int precision){
 void setup(void)
 {
   // set up for the temp sensor
-  Serial.begin(9600);
+  //Serial.begin(9600);
   sensors.begin();
 
   // set the modes for each of the pins
@@ -60,7 +61,7 @@ void loop(void)
 {
   // get temp data
   sensors.requestTemperatures();
-  Serial.println(sensors.getTempCByIndex(0));
+  //Serial.println(sensors.getTempCByIndex(0));
   tempInput = sensors.getTempCByIndex(0);
 
   // convert temp to HSV
@@ -73,13 +74,13 @@ void loop(void)
   // convert HSV to RGB values
   HSVtoRGB(red, green, blue, hsvHue, HSV_SATURATION, HSV_VALUE);
 
-  Serial.print("red: ");
-  Serial.print(red);
-  Serial.print(" green: ");
-  Serial.print(green);
-  Serial.print(" blue: ");
-  Serial.print(blue);
-  Serial.print("\n");
+//  Serial.print("red: ");
+//  Serial.print(red);
+//  Serial.print(" green: ");
+//  Serial.print(green);
+//  Serial.print(" blue: ");
+//  Serial.print(blue);
+//  Serial.print("\n");
  
   delay(1000);
 
