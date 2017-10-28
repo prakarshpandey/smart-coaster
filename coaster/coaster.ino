@@ -3,7 +3,7 @@
 
 // define pins
 // temp pin
-#define SENSOR_PORT 2 
+#define SENSOR_PORT 3 
 // color pins
 #define RED_PORT 11
 #define GREEN_PORT 12
@@ -11,8 +11,8 @@
 
 // declare 'constant' variables
 // temp thresholds for color change (range in between upper and lower is green)
-double TEMP_LOWER_BOUND = 25.0; // degrees celcius was 5.0
-double TEMP_UPPER_BOUND = 30.0; // degrees celcius was 75.0
+double TEMP_LOWER_BOUND = 23.0; // degrees celcius was 5.0
+double TEMP_UPPER_BOUND = 28.0; // degrees celcius was 75.0
 // color settings 
 
 // i feel like it should be hue with the way we're defining it here...
