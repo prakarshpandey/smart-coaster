@@ -28,22 +28,22 @@ OneWire oneWire(SENSOR_PORT);
 
 DallasTemperature sensors(&oneWire);
 
-// from http://forum.arduino.cc/index.php?topic=44216.0 from mem
-void printDouble( double val, unsigned int precision){
-// prints val with number of decimal places determine by precision
-// NOTE: precision is 1 followed by the number of zeros for the desired number of decimial places
-// example: printDouble( 3.1415, 100); // prints 3.14 (two decimal places)
-// used for testing and debugging
-
-   Serial.print (int(val));  //prints the int part
-   Serial.print("."); // print the decimal point
-   unsigned int frac;
-   if(val >= 0)
-       frac = (val - int(val)) * precision;
-   else
-       frac = (int(val)- val ) * precision;
-   Serial.println(frac,DEC) ;
-} 
+//// from http://forum.arduino.cc/index.php?topic=44216.0 from mem
+//void printDouble( double val, unsigned int precision){
+//// prints val with number of decimal places determine by precision
+//// NOTE: precision is 1 followed by the number of zeros for the desired number of decimial places
+//// example: printDouble( 3.1415, 100); // prints 3.14 (two decimal places)
+//// used for testing and debugging
+//
+//   Serial.print (int(val));  //prints the int part
+//   Serial.print("."); // print the decimal point
+//   unsigned int frac;
+//   if(val >= 0)
+//       frac = (val - int(val)) * precision;
+//   else
+//       frac = (int(val)- val ) * precision;
+//   Serial.println(frac,DEC) ;
+//} 
 
 void setup(void)
 {
