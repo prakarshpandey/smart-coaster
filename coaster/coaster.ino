@@ -7,7 +7,7 @@
 // color pins
 #define RED_PORT 11
 #define GREEN_PORT 12
-#define BLUE_PORT 12
+#define BLUE_PORT 13
 
 // declare 'constant' variables
 // temp thresholds for color change (range in between upper and lower is green)
@@ -65,13 +65,13 @@ void loop(void)
 
   // convert temp to HSV
   hsvHue = temperatureToHue(tempInput);
-
+  
 //  Serial.print("hue : ");
 //  printDouble(hsvHue, 100);
 //  Serial.print(" (degrees)\n");
 
   // convert HSV to RGB values
-  HSVtoRGB(red, blue, green, hsvHue, HSV_SATURATION, HSV_VALUE);
+  HSVtoRGB(red, green, blue, hsvHue, HSV_SATURATION, HSV_VALUE);
 
   Serial.print("red: ");
   Serial.print(red);
@@ -84,7 +84,7 @@ void loop(void)
   delay(1000);
 
   // set the output for the LEDs
-  setColor((int)red, (int)green, (int)blue);
+  setColor((int)red, (int)green, (int)blue); 
 
   //red, green, blue = 0.0;
 }
@@ -100,7 +100,7 @@ double temperatureToHue(double temp)
   }
   else {
     double tempDiff = TEMP_UPPER_BOUND - TEMP_LOWER_BOUND;
-    return HSV_UPPER_BOUND * temp / tempDiff;
+    return HSV_UPPER_BOUND *(1.0 - (temp - TEMP_LOWER_BOUND)/tempDiff);
   }
 }
 
